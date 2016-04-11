@@ -25,7 +25,10 @@
 
     "Microsoft.ApplicationInsights.AspNet": "1.0.0-rc1-update2",
     "Microsoft.ApplicationInsights.Web": "2.1.0-beta2",
-    "Microsoft.ApplicationInsights.TraceListener": "2.0.0-beta2"
+    "Microsoft.ApplicationInsights.TraceListener": "2.0.0-beta2",
+
+    "Microsoft.AspNet.WebSockets.Server": "1.0.0-rc1-final",
+    "Microsoft.AspNet.SignalR.Server": "3.0.0-rc1-final"
   },
 
   "commands": {

@@ -28,6 +28,61 @@
 
 @section scripts
 {
-   
+    <script type="text/javascript">
+        $(function () {
+
+            var radarText = $('#radar-scanning');
+            radarText.find('i').text('Connecting to server...');
+
+            $.connection.hub.logging = true;
+            var photosHub = $.connection.photos;
+
+            var g = new window.gwab(this, {
+                hub: photosHub,
+                reset: $('#btn-clear')
+            });
+
+            photosHub.client.addPhoto = function (photo) {
+                console.log(photo);
+                g.addPhoto(photo);
+            }
+
+            photosHub.client.addFaces = function (faces) {
+                g.addFaces(faces);
+            }
+
+            var messages = $('.messages');
+            photosHub.client.notify = function (msg) {
+                messages.append(['<span>', msg, '</span>'].join(''));
+                console.log(msg);
+            }
+
+            console.log('Request to connect');
+            $.connection.hub.start().done(function () {
+                $('.box').toggleClass('hidden');
+
+                radarText.hide();
+                $('#con-status').text("Connected");
+                console.log('connected');
+
+                var randomMessages = 10;
+                for (var i = 0, len = randomMessages; i < len; i++) {
+                    (function (i) {
+                        setTimeout(function () {
+                            photosHub.server.generateMessage();
+                        }, Math.floor(Math.random() * 20000));
+                    })(i); //Pass current value into self-executing anonymous function
+                }
+            });
+
+            $.connection.hub.disconnected(function () {
+                $('#con-status').text("disconnected");
+                setTimeout(function () {
+                    $.connection.hub.start({ waitForPageLoad: false });
+                }, 5000); // Restart connection after 5 seconds.
+            });
+        });
+    </script>
+}
 }
 

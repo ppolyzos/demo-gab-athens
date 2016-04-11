@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -43,14 +44,20 @@ namespace GabDemo2016
 
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
-            services.AddMvc()
-                .AddJsonOptions(options =>
+            services.AddMvc(options =>
                 {
-                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                });
+                    if (!_env.IsDevelopment()) { options.Filters.Add(new RequireHttpsAttribute()); }
+                })
+               .AddJsonOptions(options =>
+               {
+                   options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+               });
+
+            services.AddSignalR(options =>
+            {
+                options.Hubs.EnableDetailedErrors = true;
+            });
         }
-
-
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
@@ -82,6 +89,10 @@ namespace GabDemo2016
             // Add Application Insights exceptions handling to the request pipeline.
             app.UseApplicationInsightsRequestTelemetry();
             app.UseApplicationInsightsExceptionTelemetry();
+
+            // Enable WebSockets & SignalR
+            app.UseWebSockets();
+            app.UseSignalR();
         }
 
         // Entry point for the application.
