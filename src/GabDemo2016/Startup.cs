@@ -27,6 +27,11 @@ namespace GabDemo2016
                 .AddJsonFile("appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
+            if (env.IsDevelopment())
+            {
+                builder.AddApplicationInsightsSettings(developerMode: true);
+            }
+
             Configuration = builder.Build();
         }
 
@@ -34,6 +39,8 @@ namespace GabDemo2016
         // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry(Configuration);
+
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             services.AddMvc()
@@ -70,6 +77,11 @@ namespace GabDemo2016
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            // Add Application Insights monitoring to the request pipeline as a very first middleware.
+            // Add Application Insights exceptions handling to the request pipeline.
+            app.UseApplicationInsightsRequestTelemetry();
+            app.UseApplicationInsightsExceptionTelemetry();
         }
 
         // Entry point for the application.

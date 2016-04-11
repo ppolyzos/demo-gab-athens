@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Mvc;
 
@@ -40,6 +41,19 @@ namespace GabDemo2016.Controllers
             }
 
             return new ObjectResult("value");
+        }
+
+        [HttpGet, Route("api/values/metrics")]
+        public IActionResult CustomMetrics()
+        {
+            var tc = new TelemetryClient();
+            // Set up some properties:
+            var properties = new Dictionary<string, string> { { "Game", "GameName" }, { "Difficulty", "Hard" } };
+            var measurements = new Dictionary<string, double> { { "GameScore", 20 }, { "Opponents", 1 } };
+            tc.TrackEvent("WinGame", properties, measurements);
+            tc.TrackMetric("GameScore", 20, properties);
+
+            return Ok("Metrics added");
         }
 
         [HttpPost, Route("api/values")]
