@@ -1,4 +1,5 @@
 ﻿@using System.Threading.Tasks
+@using GabDemo2016.Properties
 @using Microsoft.Extensions.OptionsModel
 @inject IOptions<AppSettings> AppSettings
 @{
@@ -31,6 +32,13 @@
 
     <div class="status text-center">
         Socket Connection: <span id="con-status">disconnected</span>
+    </div>
+
+    <div>
+        <h2>Faces</h2>
+        <div class="grid" id="faces-grid">
+            <p class="empty-msg">No faces currently available</p>
+        </div>
     </div>
 
     <div>

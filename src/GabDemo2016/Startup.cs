@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GabDemo2016.Data;
+using GabDemo2016.Properties;
 using GabDemo2016.Services;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
@@ -69,6 +70,7 @@ namespace GabDemo2016
 
             services.AddTransient<IStorageService, CloudStorageService>();
             services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<IFaceDetectionService, FaceDetectionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

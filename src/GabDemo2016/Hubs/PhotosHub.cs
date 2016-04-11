@@ -34,6 +34,12 @@ namespace GabDemo2016.Hubs
                 Clients.Caller.addPhoto(photo);
             }
 
+            var faces = await _dbContext.Faces.ToListAsync();
+            if (faces.Any())
+            {
+                Clients.Caller.addFaces(faces);
+            }
+
             return photos;
         }
 

@@ -29,14 +29,17 @@ namespace GabDemo2016.Controllers
         }
 
         private readonly IStorageService _storageService;
+        private readonly IFaceDetectionService _faceDetectionService;
         private readonly IImageService _imageService;
         private readonly ApplicationDbContext _dbContext;
 
         public FileUploadController(IStorageService storageService,
+            IFaceDetectionService faceDetectionService,
             IImageService imageService,
             ApplicationDbContext dbContext)
         {
             _storageService = storageService;
+            _faceDetectionService = faceDetectionService;
             _imageService = imageService;
             _dbContext = dbContext;
         }
@@ -54,7 +57,12 @@ namespace GabDemo2016.Controllers
 
                 _photosHub.Clients.All.addPhoto(photo);
 
+                var faces = await _faceDetectionService.FindFaces(photo);
+
                 photos.Add(photo);
+
+                _photosHub.Clients.All.addFaces(faces);
+                _dbContext.Faces.AddRange(faces);
                 await _dbContext.SaveChangesAsync();
             }
 

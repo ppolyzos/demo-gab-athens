@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using GabDemo2016.Properties;
 using ImageResizer.ExtensionMethods;
 using Microsoft.Extensions.OptionsModel;
 using Microsoft.WindowsAzure.Storage;
