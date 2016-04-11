@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GabDemo2016.Data;
+using GabDemo2016.Services;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
+using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -43,6 +46,7 @@ namespace GabDemo2016
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.Configure<AzureStorageSettings>(Configuration.GetSection("Data:StorageConnection"));
 
             services.AddMvc(options =>
                 {
@@ -57,6 +61,14 @@ namespace GabDemo2016
             {
                 options.Hubs.EnableDetailedErrors = true;
             });
+
+            services.AddEntityFramework()
+                .AddSqlServer()
+                .AddDbContext<ApplicationDbContext>(
+                    options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+
+            services.AddTransient<IStorageService, CloudStorageService>();
+            services.AddTransient<IImageService, ImageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

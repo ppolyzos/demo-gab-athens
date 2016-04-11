@@ -117,13 +117,13 @@
         var self = this;
         if (!self.options.upload) return;
 
-        self.options.upload.effectEl.ElasticProgress({
+        var progress = self.options.upload.effectEl.ElasticProgress({
             buttonSize: 60,
             fontFamily: "Montserrat",
             colorBg: "#adeca8",
             colorFg: "#7cc576",
             arrowDirection: "up",
-            onClick: function(event) {
+            onClick: function (event) {
                 console.log("onClick");
                 self._displayFileUpload(progress);
             }
@@ -204,7 +204,7 @@
 
         var template = tplPhoto.clone();
         template.attr('id', 'photo-' + photo.Id);
-        template.find('img').attr('src', assetsUrl + 'photos/' + photo.Filename + '.jpeg');
+        template.find('img').attr('src', assetsUrl + '/photos/' + photo.Filename + '.jpeg');
         template.removeClass('hidden');
         photoGrid.prepend(template);
     };
@@ -227,7 +227,7 @@
             var photo = photoGrid.find('#photo-' + face.PhotoId);
             var iconLinks = photo.find('.icon-links');
             var tplFace = self.options.faces.tpl.clone().removeClass('hidden');
-            var url = [assetsUrl, 'faces/', face.Id, '.jpeg'].join('');
+            var url = [assetsUrl, '/faces/', face.Id, '.jpeg'].join('');
             tplFace.find('a').attr('href', face.Id);
             tplFace.find('img').attr('src', url);
             var link = ['<a href="', face.Id, '" class="face"><img src=', url, ' /></a>'].join('');

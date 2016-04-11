@@ -28,11 +28,18 @@
     "Microsoft.ApplicationInsights.TraceListener": "2.0.0-beta2",
 
     "Microsoft.AspNet.WebSockets.Server": "1.0.0-rc1-final",
-    "Microsoft.AspNet.SignalR.Server": "3.0.0-rc1-final"
+    "Microsoft.AspNet.SignalR.Server": "3.0.0-rc1-final",
+
+    "EntityFramework.Commands": "7.0.0-rc1-final",
+    "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
+
+    "WindowsAzure.Storage": "6.2.0",
+    "ImageResizer": "4.0.5"
   },
 
   "commands": {
-    "web": "Microsoft.AspNet.Server.Kestrel"
+    "web": "Microsoft.AspNet.Server.Kestrel",
+    "ef": "EntityFramework.Commands"
   },
 
   "frameworks": {

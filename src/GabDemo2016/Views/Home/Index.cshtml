@@ -1,4 +1,7 @@
-﻿@{
+﻿@using System.Threading.Tasks
+@using Microsoft.Extensions.OptionsModel
+@inject IOptions<AppSettings> AppSettings
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -18,10 +21,26 @@
         <i></i>
     </div>
 
+    <div class="file-upload" style="display: none">
+        <input id="fileupload" type="file" name="files" data-url="api/upload" multiple class="file-input">Choose File
+    </div>
+
+    <div class="box box--centered mb10 hidden">
+        <div role="button" tabindex="0" aria-label="Uploads" class="upload" data-progressbar-label="Uploading item..."></div>
+    </div>
+
     <div class="status text-center">
         Socket Connection: <span id="con-status">disconnected</span>
     </div>
-    <div class="messages">
+
+    <div>
+        <h2>Photos</h2>
+        <div class="grid mb20" id="photos-grid">
+            <p class="empty-msg">No photos currently available</p>
+        </div>
+    </div>
+
+    <div class="messages" style="display: none;">
     </div>
 </div>
 
@@ -39,6 +58,19 @@
 
             var g = new window.gwab(this, {
                 hub: photosHub,
+                upload: {
+                    effectEl: $('.upload'),
+                    inputFileUpload: $('#fileupload')
+                },
+                assetsUrl: '@AppSettings.Value.AssetsUrl',
+                photos: {
+                    tpl: $('#tpl-photo'),
+                    grid: $('#photos-grid')
+                },
+                faces: {
+                    tpl: $('#tpl-face'),
+                    grid: $('#faces-grid')
+                },
                 reset: $('#btn-clear')
             });
 
@@ -60,19 +92,11 @@
             console.log('Request to connect');
             $.connection.hub.start().done(function () {
                 $('.box').toggleClass('hidden');
+                photosHub.server.getPhotos();
 
                 radarText.hide();
                 $('#con-status').text("Connected");
                 console.log('connected');
-
-                var randomMessages = 10;
-                for (var i = 0, len = randomMessages; i < len; i++) {
-                    (function (i) {
-                        setTimeout(function () {
-                            photosHub.server.generateMessage();
-                        }, Math.floor(Math.random() * 20000));
-                    })(i); //Pass current value into self-executing anonymous function
-                }
             });
 
             $.connection.hub.disconnected(function () {

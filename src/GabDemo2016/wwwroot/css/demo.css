@@ -97,7 +97,7 @@ button:focus {
 }
 
 .mb10 {
-    margin-bottom: 10px;
+    margin-bottom: 10px !important;
 }
 
 .mb20 {
@@ -423,6 +423,7 @@ body #cdawrap {
 
     .face img {
         width: 70px;
+        height: 70px;
         border: 2px solid #dadada;
         border-radius: 50%;
     }
@@ -467,6 +468,7 @@ body #cdawrap {
 
 figure .face img {
     width: 40px;
+    height: 40px;
     opacity: 1;
 }
 

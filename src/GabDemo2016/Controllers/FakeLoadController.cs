@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using Microsoft.AspNet.Mvc;
 
-namespace GwabDemo2016.Controllers
+namespace GabDemo2016.Controllers
 {
     public class FakeLoadController : Controller
     {
