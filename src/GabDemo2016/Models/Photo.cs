@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace GabDemo2016.Models
 {
@@ -10,6 +11,7 @@ namespace GabDemo2016.Models
         public int Id { get; set; }
         public string Filename { get; set; }
 
+        [JsonIgnore] 
         public List<Face> Faces { get; set; }
     }
 
@@ -22,6 +24,9 @@ namespace GabDemo2016.Models
         public double? Age { get; set; }
         public double? Smile { get; set; }
 
+        public int PhotoId { get; set; }
+
+        [ForeignKey("PhotoId")]
         public Photo Photo { get; set; }
     }
 }
