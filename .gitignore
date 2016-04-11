@@ -29,6 +29,9 @@ bld/
 wwwroot/css/*.min.css
 wwwroot/js/*.min.js
 
+# Ignore AppSettings for environments Development, Production
+appsettings.*.json
+
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
