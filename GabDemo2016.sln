@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "GabDemo2016", "src\GabDemo2016\GabDemo2016.xproj", "{4D816195-0753-49D8-9845-48505903B57D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GabDemo2016.WebJobs", "GabDemo2016.WebJobs\GabDemo2016.WebJobs.csproj", "{56B3D30D-3933-407D-B5AA-6B4E2C06267F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,11 +25,16 @@ Global
 		{4D816195-0753-49D8-9845-48505903B57D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D816195-0753-49D8-9845-48505903B57D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D816195-0753-49D8-9845-48505903B57D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56B3D30D-3933-407D-B5AA-6B4E2C06267F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56B3D30D-3933-407D-B5AA-6B4E2C06267F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56B3D30D-3933-407D-B5AA-6B4E2C06267F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56B3D30D-3933-407D-B5AA-6B4E2C06267F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4D816195-0753-49D8-9845-48505903B57D} = {CF1C08CF-BEA3-42E1-B1BB-A9BD96A88EB2}
+		{56B3D30D-3933-407D-B5AA-6B4E2C06267F} = {CF1C08CF-BEA3-42E1-B1BB-A9BD96A88EB2}
 	EndGlobalSection
 EndGlobal

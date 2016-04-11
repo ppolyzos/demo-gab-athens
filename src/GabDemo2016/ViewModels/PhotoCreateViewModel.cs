@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace GabDemo2016.ViewModels
 {
@@ -6,5 +7,11 @@ namespace GabDemo2016.ViewModels
     {
         [Required]
         public string Filename { get; set; }
+    }
+
+    public class FacesFoundViewModel
+    {
+        public string PhotoId { get; set; }
+        public IList<FaceViewModel> FacesViewModels { get; set; } 
     }
 }

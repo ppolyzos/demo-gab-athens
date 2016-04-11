@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using GabDemo2016.Data;
 using GabDemo2016.Models;
 using GabDemo2016.Services;
+using GabDemo2016.ViewModels;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using Microsoft.Data.Entity;
@@ -51,6 +52,27 @@ namespace GabDemo2016.Hubs
         public void GenerateMessage()
         {
             Clients.All.notify($"{DateTime.Now.ToString("HH:mm:ss")}: Random Message id: {_random.Next(1, 100)}");
+        }
+
+        public async void FacesFound(string photoId, IList<FaceViewModel> facesViewModel)
+        {
+            var photo = _dbContext.Photos.FirstOrDefault(c => c.Filename == photoId);
+            if (photo == null) return;
+
+            var faces = facesViewModel.Select(c => new Face
+            {
+                Id = c.FaceId,
+                PhotoId = photo.Id,
+                Gender = c.FaceAttributes?.Gender,
+                Age = c.FaceAttributes?.Age,
+                Smile = c.FaceAttributes?.Smile
+            }).ToList();
+
+
+            Clients.All.addFaces(faces);
+
+            _dbContext.Faces.AddRange(faces);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async void Reset()
