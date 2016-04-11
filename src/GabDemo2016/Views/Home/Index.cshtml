@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    ViewBag.AssetsUrl = "https://gwabathens.blob.core.windows.net/";
+}
+
+@section header {
+    @await Html.PartialAsync("_Header", null, null)
+}
+
+
+<div class="content">
+
+    <div id="radar-scanning">
+        <div class="loader-radar">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <i></i>
+    </div>
+
+    <div class="status text-center">
+        Socket Connection: <span id="con-status">disconnected</span>
+    </div>
+    <div class="messages">
+    </div>
+</div>
+
+
+@section scripts
+{
+   
+}
+
