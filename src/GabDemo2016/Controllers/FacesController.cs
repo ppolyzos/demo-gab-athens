@@ -8,6 +8,7 @@ using GabDemo2016.ViewModels;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.Data.Entity;
 
 namespace GabDemo2016.Controllers
 {
@@ -31,6 +32,16 @@ namespace GabDemo2016.Controllers
         public FacesController(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        [HttpGet, Route("api/faces/{photoId}")]
+        public async Task<IActionResult> GetFaces(int photoId)
+        {
+            var results = await _dbContext.Faces
+                .Where(f => f.PhotoId == photoId)
+                .ToListAsync();
+
+            return Ok(results);
         }
 
         [HttpPost, Route("api/faces/found")]
