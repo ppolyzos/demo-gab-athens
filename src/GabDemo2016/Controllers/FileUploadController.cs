@@ -57,8 +57,14 @@ namespace GabDemo2016.Controllers
 
                 _photosHub.Clients.All.addPhoto(photo);
 
-                photos.Add(photo);
+                _photosHub.Clients.All.detectingFaces(true);
+                var faces = await _faceDetectionService.FindFaces(photo);
+                _photosHub.Clients.All.detectingFaces(false);
 
+                photos.Add(photo);
+                _photosHub.Clients.All.addFaces(faces);
+
+                _dbContext.Faces.AddRange(faces);
                 await _dbContext.SaveChangesAsync();
             }
 

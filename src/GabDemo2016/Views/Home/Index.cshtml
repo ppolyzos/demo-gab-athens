@@ -59,6 +59,10 @@
         $(function () {
 
             var radarText = $('#radar-scanning');
+            var statusText = $('.status');
+            var conStatus = statusText.find('span');
+            var $body = $('body');
+
             radarText.find('i').text('Connecting to server...');
 
             $.connection.hub.logging = true;
@@ -97,20 +101,32 @@
                 console.log(msg);
             }
 
+            photosHub.client.detectingFaces = function (running) {
+                if ($body.width() < 500) {
+                    statusText.toggle(!running);
+                }
+
+                radarText.toggle(running);
+            }
+
             console.log('Request to connect');
             $.connection.hub.start().done(function () {
                 $('.box').toggleClass('hidden');
                 photosHub.server.getPhotos();
 
                 radarText.hide();
-                $('#con-status').text("Connected");
-                console.log('connected');
+                radarText.css('position', 'absolute');
+                radarText.find('i').text('Detecting faces...');
+                conStatus.text("Connected");
             });
 
             $.connection.hub.disconnected(function () {
-                $('#con-status').text("disconnected");
+                conStatus.text("Disconnected");
                 setTimeout(function () {
-                    $.connection.hub.start({ waitForPageLoad: false });
+                    conStatus.text("Reconnecting...");
+                    $.connection.hub.start({ waitForPageLoad: false }).done(function () {
+                        conStatus.text("Connected");
+                    });
                 }, 5000); // Restart connection after 5 seconds.
             });
         });
